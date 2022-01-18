@@ -1,0 +1,17 @@
+.headerBasket {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.headerBasket__icon {
+  color: white;
+}
+
+.headerBasket__count {
+  color: white;
+  font-size: medium;
+  font-weight: 700;
+  margin-left: 10px;
+  margin-top: 5px;
+}

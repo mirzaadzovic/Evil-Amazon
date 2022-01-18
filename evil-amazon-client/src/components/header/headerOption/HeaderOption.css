@@ -1,0 +1,16 @@
+.headerOption {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
+}
+
+.headerOption__lineOne {
+  font-size: small;
+}
+
+.headerOption__lineTwo {
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 15px;
+}
