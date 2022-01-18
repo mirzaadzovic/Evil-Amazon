@@ -5,5 +5,14 @@
 
 :root {
   --amazon-yellow: #cd9042;
+  --amazon-lighteryellow: #f0c14b;
   --amazon-black: #131921;
+}
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  overflow-x: hidden;
 }
