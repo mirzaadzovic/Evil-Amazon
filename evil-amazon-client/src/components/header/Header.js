@@ -19,8 +19,9 @@ function Header() {
         <HeaderOption top={"Hello"} bottom={"Sign in"} />
         <HeaderOption top={"Returns"} bottom={"& Orders"} />
         <HeaderOption top={"Your"} bottom={"Prime"} />
-        <HeaderBasket count={0} />
       </div>
+
+      <HeaderBasket count={0} />
     </div>
   );
 }

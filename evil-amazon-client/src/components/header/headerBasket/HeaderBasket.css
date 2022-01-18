@@ -1,7 +1,8 @@
 .headerBasket {
   align-items: center;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  flex: 0.3;
 }
 
 .headerBasket__icon {
