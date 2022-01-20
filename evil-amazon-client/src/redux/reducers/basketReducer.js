@@ -9,15 +9,15 @@ export const getCount = (state) => state.basket.count;
 export const getBasket = (state) => state.basket.items;
 
 const basketReducer = (state = initialState, action) => {
-  switch (action) {
+  switch (action.type) {
     case ADD_TO_BASKET:
       return {
-        count: state.count++,
-        items: state.items.push(action.payload),
+        count: state.count + 1,
+        items: [...state.items, action.payload],
       };
     case REMOVE_FROM_BASKET:
       return {
-        count: state.count--,
+        count: state.count - 1,
         items: state.items.filter((i) => i.id !== action.payload.id),
       };
     default:

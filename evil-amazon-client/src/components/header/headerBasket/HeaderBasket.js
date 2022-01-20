@@ -8,7 +8,6 @@ import { getCount } from "../../../redux/reducers/basketReducer";
 
 const HeaderBasket = () => {
   const count = useSelector(getCount);
-  console.log(count);
   return (
     <Link to="/checkout" className="headerBasket">
       <IconButton>

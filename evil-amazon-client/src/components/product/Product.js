@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Product.css";
 import StarIcon from "@mui/icons-material/Star";
+import { useDispatch } from "react-redux";
+import { addToBasket } from "../../redux/actions/basketActions";
 
-const Product = ({ title, price, img, rating }) => {
+const Product = (props) => {
+  const dispatch = useDispatch();
+  const { title, price, img, rating } = props;
+
+  const addItem = () => {
+    dispatch(addToBasket(props));
+  };
+
   const stars = Array(rating) // creates array with 'rating' number of stars
     .fill()
     .map((_, idx) => <StarIcon className="product__star" key={idx} />);
+
   return (
     <div className="product">
       <div className="product__info">
@@ -19,7 +29,9 @@ const Product = ({ title, price, img, rating }) => {
 
       <img src={img} />
 
-      <button className="amazon-btn">Add to basket</button>
+      <button className="amazon-btn" onClick={addItem}>
+        Add to basket
+      </button>
     </div>
   );
 };
