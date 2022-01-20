@@ -16,7 +16,7 @@ function Header() {
       </div>
 
       <div className="header__nav">
-        <HeaderOption top={"Hello"} bottom={"Sign in"} />
+        <HeaderOption top={"Hello Guest"} bottom={"Sign in"} />
         <HeaderOption top={"Returns"} bottom={"& Orders"} />
         <HeaderOption top={"Your"} bottom={"Prime"} />
       </div>

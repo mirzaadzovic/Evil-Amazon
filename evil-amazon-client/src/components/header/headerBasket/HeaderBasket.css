@@ -9,6 +9,11 @@
   color: white;
 }
 
+.headerBasket__icon:active {
+  color: white;
+  font-size: 20px;
+}
+
 .headerBasket__count {
   color: white;
   font-size: medium;

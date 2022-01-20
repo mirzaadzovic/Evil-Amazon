@@ -1,7 +1,9 @@
 import React from "react";
 import "./Product.css";
+import StarIcon from "@mui/icons-material/Star";
 
-const Product = ({ title, price, img }) => {
+const Product = ({ title, price, img, rating }) => {
+  const stars = Array(rating).fill(<StarIcon className="product__star" />); // creates array with 'rating' number of stars
   return (
     <div className="product">
       <div className="product__info">
@@ -10,13 +12,7 @@ const Product = ({ title, price, img }) => {
           <strong>{price}</strong>
           <small>€</small>
         </p>
-
-        <div className="product__rating">
-          <p>⭐</p>
-          <p>⭐</p>
-          <p>⭐</p>
-          <p>⭐</p>
-        </div>
+        <div className="product__rating">{stars}</div>
       </div>
 
       <img src={img} />
