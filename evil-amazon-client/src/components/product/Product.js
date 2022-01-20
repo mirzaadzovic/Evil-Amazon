@@ -17,7 +17,7 @@ const Product = ({ title, price, img, rating }) => {
 
       <img src={img} />
 
-      <button>Add to basket</button>
+      <button className="amazon-btn">Add to basket</button>
     </div>
   );
 };

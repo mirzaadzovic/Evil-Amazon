@@ -4,11 +4,14 @@ import amazonLogoWhite from "../../assets/amazonLogoWhite.png";
 import SearchIcon from "@mui/icons-material/Search";
 import HeaderOption from "./headerOption/HeaderOption";
 import HeaderBasket from "./headerBasket/HeaderBasket";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <div className="header">
-      <img className="header__logo" src={amazonLogoWhite} />
+      <Link to="/">
+        <img className="header__logo" src={amazonLogoWhite} />
+      </Link>
 
       <div className="header__search">
         <input className="header__searchInput" type="text" />

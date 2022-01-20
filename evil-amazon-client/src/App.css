@@ -20,3 +20,11 @@ body,
 .app {
   background-color: #efefef;
 }
+
+.amazon-btn {
+  background: var(--amazon-lighteryellow);
+  border-color: #a88734 #9c7e31 #846a29;
+  cursor: pointer;
+  color: #111;
+  padding: 2px;
+}
