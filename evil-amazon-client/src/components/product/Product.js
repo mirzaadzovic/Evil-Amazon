@@ -3,7 +3,9 @@ import "./Product.css";
 import StarIcon from "@mui/icons-material/Star";
 
 const Product = ({ title, price, img, rating }) => {
-  const stars = Array(rating).fill(<StarIcon className="product__star" />); // creates array with 'rating' number of stars
+  const stars = Array(rating) // creates array with 'rating' number of stars
+    .fill()
+    .map((_, idx) => <StarIcon className="product__star" key={idx} />);
   return (
     <div className="product">
       <div className="product__info">

@@ -4,7 +4,7 @@ import amazonBanner from "../../assets/amazonBanner.jpg";
 import Product from "../product/Product";
 function Home() {
   return (
-    <div class="home">
+    <div className="home">
       <div className="home__container">
         <img className="home__image" src={amazonBanner} alt="amazon-banner" />
         <div className="home__row">

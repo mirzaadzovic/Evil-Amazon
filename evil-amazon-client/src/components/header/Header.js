@@ -24,7 +24,7 @@ function Header() {
         <HeaderOption top={"Your"} bottom={"Prime"} />
       </div>
 
-      <HeaderBasket count={0} />
+      <HeaderBasket />
     </div>
   );
 }
