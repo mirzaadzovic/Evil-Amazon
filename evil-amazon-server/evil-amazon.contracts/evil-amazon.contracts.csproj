@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>evil_amazon.contracts</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\entities\evil-amazon.entities.csproj" />
+    <ProjectReference Include="..\evil-amazon.dtos\evil-amazon.dtos.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\entities\entities.csproj" />
+    <ProjectReference Include="..\entities\evil-amazon.entities.csproj" />
+    <ProjectReference Include="..\evil-amazon.repository\evil-amazon.repository.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace evil_amazon_server.Services
+namespace API.Services
 {
     public class SetupService
     {

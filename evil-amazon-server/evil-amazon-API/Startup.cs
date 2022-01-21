@@ -1,4 +1,4 @@
-using evil_amazon_server.Extensions;
+using API.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace evil_amazon_server
+namespace API
 {
     public class Startup
     {
@@ -35,6 +35,7 @@ namespace evil_amazon_server
             });
 
             services.ConfigureSqlServerContext(Configuration);
+            services.ConfigureRepositoryWrapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

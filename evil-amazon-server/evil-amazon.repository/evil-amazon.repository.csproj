@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>evil_amazon.repository</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\entities\evil-amazon.entities.csproj" />
+    <ProjectReference Include="..\evil-amazon.contracts\evil-amazon.contracts.csproj" />
+    <ProjectReference Include="..\evil-amazon.dtos\evil-amazon.dtos.csproj" />
+  </ItemGroup>
+
+</Project>

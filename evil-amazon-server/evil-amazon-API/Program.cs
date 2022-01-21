@@ -1,5 +1,5 @@
 using entities.Context;
-using evil_amazon_server.Services;
+using API.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace evil_amazon_server
+namespace API
 {
     public class Program
     {
