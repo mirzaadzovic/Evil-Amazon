@@ -36,6 +36,7 @@ namespace API
 
             services.ConfigureSqlServerContext(Configuration);
             services.ConfigureRepositoryWrapper();
+            services.ConfigureCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
