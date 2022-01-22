@@ -1,6 +1,7 @@
 ﻿using evil_amazon.contracts;
 using evil_amazon.dtos.Requests;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +14,28 @@ namespace API.Controllers
     public class ProductsController:ControllerBase
     {
         private readonly IRepositoryWrapper _repository;
-        public ProductsController(IRepositoryWrapper repository)
+        private readonly ILogger _logger;
+        public ProductsController(IRepositoryWrapper repository, ILoggerFactory loggerFactory)
         {
             _repository = repository;
+            _logger=loggerFactory.CreateLogger("products");
         }
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string name=null)
         {
             try
             {
-                var products = _repository.Products.GetAll();
+                // get all products if name query is null, filters by name if it's not
+                var products = name==null?
+                    _repository.Products.GetAll():
+                    await _repository.Products.GetByName(name);
+
+                _logger.LogInformation("Status code: 200, Products fetched");
                 return Ok(products);
             }
             catch
             {
+                _logger.LogError("Status code: 500, Internal server error");
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -39,6 +48,7 @@ namespace API.Controllers
                 var product = _repository.Products.GetById(id);
                 if (product == null)
                 {
+                    _logger.LogError("Status code: 404, Product not found");
                     return NotFound();
                 }
                 return Ok(product);
@@ -50,7 +60,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Insert([FromBody] ProductUpsertDto request)
+        public async Task<IActionResult> Insert([FromBody] ProductUpsertDto request)
         {
             try
             {
@@ -65,7 +75,7 @@ namespace API.Controllers
                 }
 
                 var product = _repository.Products.Insert(request);
-                _repository.Save();
+                await _repository.Save();
 
                 return Created("Product created", product);
             }
@@ -76,7 +86,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update(int id, [FromBody]ProductUpsertDto request)
+        public async Task<IActionResult> Update(int id, [FromBody]ProductUpsertDto request)
         {
             try
             {
@@ -91,6 +101,7 @@ namespace API.Controllers
                 }
 
                 var product = _repository.Products.Update(id, request);
+                await _repository.Save();
 
                 return Ok(product);
             }

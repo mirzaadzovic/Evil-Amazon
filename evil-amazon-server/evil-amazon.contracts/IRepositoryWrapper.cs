@@ -9,6 +9,6 @@ namespace evil_amazon.contracts
     public interface IRepositoryWrapper
     {
         IProductRepository Products { get; }
-        void Save();
+        Task Save();
     }
 }

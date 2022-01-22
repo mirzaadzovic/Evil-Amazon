@@ -34,7 +34,6 @@ namespace API.Extensions
                 builder.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials()
                 );
             });
             

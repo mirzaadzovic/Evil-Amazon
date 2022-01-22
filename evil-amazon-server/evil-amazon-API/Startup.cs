@@ -34,6 +34,7 @@ namespace API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "evil_amazon_server", Version = "v1" });
             });
 
+            services.AddLogging();
             services.ConfigureSqlServerContext(Configuration);
             services.ConfigureRepositoryWrapper();
             services.ConfigureCors();
@@ -52,6 +53,7 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 

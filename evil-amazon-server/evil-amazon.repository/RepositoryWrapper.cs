@@ -20,9 +20,9 @@ namespace evil_amazon.repository
                 return _products;
             } }
 
-        public void Save()
+        public async Task Save()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public RepositoryWrapper(EvilAmazonDbContext context)

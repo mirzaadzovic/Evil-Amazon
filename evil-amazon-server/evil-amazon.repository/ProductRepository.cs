@@ -10,6 +10,7 @@ using entities.Models;
 using evil_amazon.contracts;
 using evil_amazon.dtos;
 using evil_amazon.dtos.Requests;
+using Microsoft.EntityFrameworkCore;
 
 namespace evil_amazon.repository
 {
@@ -19,12 +20,12 @@ namespace evil_amazon.repository
         {
         }
 
-        public IEnumerable GetByName(string query)
+        public async Task<IEnumerable> GetByName(string query)
         {
             var set = _context.Set<Product>()
                 .Where(p => p.Name.ToLower().Contains(query.ToLower()));
 
-            return _mapper.Map<List<ProductDto>>(set);
+            return _mapper.Map<List<ProductDto>>(await set.ToListAsync());
         }
     }
 }

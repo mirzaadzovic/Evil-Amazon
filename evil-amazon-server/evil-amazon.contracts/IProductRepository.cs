@@ -12,6 +12,6 @@ namespace evil_amazon.contracts
 {
     public interface IProductRepository:ICRUDRepository<ProductDto, Product, ProductUpsertDto, ProductUpsertDto>
     {
-        IEnumerable GetByName(string query);
+        Task<IEnumerable> GetByName(string query);
     }
 }
