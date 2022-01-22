@@ -4,6 +4,16 @@ const initialState = {
   items: [],
 };
 
+const executeRemoveFromBasket = (state, action) => {
+  const index = state.items.findIndex((item) => item.id === action.payload.id);
+  const newBasket = [...state.items];
+  newBasket.splice(index, 1);
+
+  return {
+    items: newBasket,
+  };
+};
+
 const basketReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_BASKET:
@@ -11,9 +21,8 @@ const basketReducer = (state = initialState, action) => {
         items: [...state.items, action.payload],
       };
     case REMOVE_FROM_BASKET:
-      return {
-        items: state.items.filter((i) => i.id !== action.payload.id),
-      };
+      return executeRemoveFromBasket(state, action);
+
     default:
       return state;
   }

@@ -5,8 +5,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import HeaderOption from "./headerOption/HeaderOption";
 import HeaderBasket from "./headerBasket/HeaderBasket";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectPath } from "../../redux/reducers/pathReducer";
 
 function Header() {
+  const isLoginOrRegisterPage = useSelector(selectPath);
+
+  // Header will not show on login or register page
+  if (isLoginOrRegisterPage) return null;
+
   return (
     <div className="header">
       <Link to="/">
@@ -19,7 +26,9 @@ function Header() {
       </div>
 
       <div className="header__nav">
-        <HeaderOption top={"Hello Guest"} bottom={"Sign in"} />
+        <Link className="header__login" to="/login">
+          <HeaderOption top={"Hello Guest"} bottom={"Sign in"} />
+        </Link>
         <HeaderOption top={"Returns"} bottom={"& Orders"} />
         <HeaderOption top={"Your"} bottom={"Prime"} />
       </div>

@@ -1,10 +1,10 @@
 import "./App.css";
 import Header from "./components/header/Header";
 import Home from "./components/home/Home";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Checkout from "./components/checkout/Checkout";
 import store from "./redux/store";
-import { Provider } from "react-redux";
+import Login from "./components/login/Login";
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>

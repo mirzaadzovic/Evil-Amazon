@@ -40,3 +40,7 @@
   display: flex;
   justify-content: center;
 }
+
+.header__login {
+  text-decoration: none;
+}

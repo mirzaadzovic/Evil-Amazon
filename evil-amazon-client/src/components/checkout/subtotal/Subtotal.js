@@ -25,7 +25,9 @@ const Subtotal = ({ count, subtotal }) => {
         suffix={"€"}
         decimalScale={2}
       />
-      <button className="amazon-btn">Procced to checkout</button>
+      <button className="amazon-btn" disabled={!count}>
+        Procced to checkout
+      </button>
     </div>
   );
 };
