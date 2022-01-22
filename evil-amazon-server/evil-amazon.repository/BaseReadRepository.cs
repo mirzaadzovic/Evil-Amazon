@@ -18,13 +18,13 @@ namespace evil_amazon.repository
         {
             _context = context;
         }
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             var set = _context.Set<TDb>();
             return _mapper.Map<List<T>>(set);
         }
 
-        public T GetById(int id)
+        public virtual T GetById(int id)
         {
             var item = _context.Set<TDb>().Find(id);
             return _mapper.Map<T>(item);

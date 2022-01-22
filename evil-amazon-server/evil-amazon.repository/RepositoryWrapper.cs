@@ -12,13 +12,27 @@ namespace evil_amazon.repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private readonly IProductRepository _products;
+        private readonly IUserRepository _users;
         private readonly EvilAmazonDbContext _context;
-        public IProductRepository Products { get
+        public IProductRepository Products
+        {
+            get
             {
                 if (_products == null)
                     return new ProductRepository(_context);
                 return _products;
-            } }
+            }
+        }
+
+        public IUserRepository Users
+        {
+            get
+            {
+                if (_users == null)
+                    return new UserRepository(_context);
+                return _users;
+            }
+        }
 
         public async Task Save()
         {

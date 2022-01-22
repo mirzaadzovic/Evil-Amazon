@@ -14,21 +14,21 @@ namespace evil_amazon.repository
         public BaseCRUDRepository(EvilAmazonDbContext context) : base(context)
         {
         }
-        public T Insert(TInsert request)
+        public virtual T Insert(TInsert request)
         {
             TDb entity = _mapper.Map<TDb>(request);
             _context.Set<TDb>().Add(entity);
             return _mapper.Map<T>(entity);
         }
 
-        public T Update(int id, TUpdate request)
+        public virtual T Update(int id, TUpdate request)
         {
             var entity = _context.Set<TDb>().Find(id);
             _mapper.Map(request, entity);
             return _mapper.Map<T>(entity);
         }
 
-        public T Delete(int id)
+        public virtual T Delete(int id)
         {
             var set = _context.Set<TDb>();
             var entity = set.Find(id);
