@@ -9,12 +9,14 @@ function Home() {
         <img className="home__image" src={amazonBanner} alt="amazon-banner" />
         <div className="home__row">
           <Product
+            id="123"
             title={"Female bestsellers pack: Boost your ego Businesses"}
             price={"19.99"}
             img={"https://m.media-amazon.com/images/I/61ii0vPLUlL.jpg"}
             rating={4}
           />
           <Product
+            id="456"
             title={"Alexa - Making random noises at 3 AM and freaks you out"}
             price={"49.99"}
             img={
@@ -26,6 +28,7 @@ function Home() {
 
         <div className="home__row">
           <Product
+            id="789"
             title={"Alexa - Making random noises at 3 AM and freaks you out"}
             price={"49.99"}
             img={
@@ -34,12 +37,14 @@ function Home() {
             rating={5}
           />
           <Product
+            id="qwe"
             title={"Female bestsellers pack: Boost your ego Businesses"}
             price={"19.99"}
             img={"https://m.media-amazon.com/images/I/61ii0vPLUlL.jpg"}
             rating={4}
           />
           <Product
+            id="rtz"
             title={"Alexa - Making random noises at 3 AM and freaks you out"}
             price={"49.99"}
             img={
@@ -51,6 +56,7 @@ function Home() {
 
         <div className="home__row">
           <Product
+            id="sfgs"
             title={"Alexa - Making random noises at 3 AM and freaks you out"}
             price={"49.99"}
             img={

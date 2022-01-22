@@ -1,11 +1,10 @@
 import React from "react";
 import CurrencyFormat from "react-currency-format";
-import { useSelector } from "react-redux";
-import { getCount } from "../../../redux/reducers/basketReducer";
+import { connect, useSelector } from "react-redux";
+import { getCount, getSubtotal } from "../../../redux/reducers/basketReducer";
 import "./Subtotal.css";
 
-const Subtotal = () => {
-  const count = useSelector(getCount);
+const Subtotal = ({ count, subtotal }) => {
   return (
     <div className="subtotal">
       <CurrencyFormat
@@ -20,7 +19,7 @@ const Subtotal = () => {
             </small>
           </>
         )}
-        value={42.99}
+        value={subtotal}
         displayType={"text"}
         thousandSeparator={true}
         suffix={"€"}
@@ -31,4 +30,11 @@ const Subtotal = () => {
   );
 };
 
-export default Subtotal;
+const mapStateToProps = (state) => {
+  return {
+    count: getCount(state),
+    subtotal: getSubtotal(state),
+  };
+};
+
+export default connect(mapStateToProps)(Subtotal);

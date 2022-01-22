@@ -3,11 +3,10 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { IconButton } from "@mui/material";
 import "./HeaderBasket.css";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { getCount } from "../../../redux/reducers/basketReducer";
 
-const HeaderBasket = () => {
-  const count = useSelector(getCount);
+const HeaderBasket = ({ count }) => {
   return (
     <Link to="/checkout" className="headerBasket">
       <IconButton>
@@ -18,4 +17,9 @@ const HeaderBasket = () => {
   );
 };
 
-export default HeaderBasket;
+const mapStateToProps = (state) => {
+  return {
+    count: getCount(state),
+  };
+};
+export default connect(mapStateToProps)(HeaderBasket);

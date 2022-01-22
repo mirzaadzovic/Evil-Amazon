@@ -23,7 +23,7 @@ export const fetchProductsFailure = (error) => {
   };
 };
 
-export const fetchUsers = () => {
+export const fetchProducts = () => {
   return (dispatch) => {
     dispatch(fetchProductsRequest());
     APIService.getAll("/api/products")
