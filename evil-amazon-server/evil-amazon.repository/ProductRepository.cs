@@ -20,7 +20,7 @@ namespace evil_amazon.repository
         {
         }
 
-        public async Task<IEnumerable> GetByName(string query)
+        public async Task<IEnumerable<ProductDto>> GetByName(string query)
         {
             var set = _context.Set<Product>()
                 .Where(p => p.Name.ToLower().Contains(query.ToLower()));

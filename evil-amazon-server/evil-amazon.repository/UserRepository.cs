@@ -37,9 +37,9 @@ namespace evil_amazon.repository
             return _mapper.Map<UserDto>(entity);
         }
 
-        public UserDto Login(string username, string password)
+        public UserDto Login(string email, string password)
         {
-            var user = _context.Set<User>().FirstOrDefault(u => u.Username == username);
+            var user = _context.Set<User>().FirstOrDefault(u => u.Email == email);
 
             if (user == null)
                 return null;

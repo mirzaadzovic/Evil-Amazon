@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import amazonLogo from "../../assets/amazonLogo.png";
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { setLoginFalse, setLoginTrue } from "../../redux/actions/pathActions";
 import { Link } from "react-router-dom";
+import { logInUser } from "../../redux/actions/userActions";
 
-const Login = () => {
+const Login = ({ login }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,12 +19,14 @@ const Login = () => {
 
   const signIn = (e) => {
     e.preventDefault();
-    alert("Clicked");
+    login(email, password);
   };
 
   const register = (e) => {
     e.preventDefault();
   };
+
+  const inputEmpty = !email || !password;
 
   return (
     <div className="login">
@@ -48,7 +51,11 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button className="login__signInButton amazon-btn" onClick={signIn}>
+          <button
+            className="login__signInButton amazon-btn"
+            onClick={signIn}
+            disabled={inputEmpty}
+          >
             Sign In
           </button>
         </form>
@@ -68,4 +75,9 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (email, password) => dispatch(logInUser(email, password)),
+  };
+};
+export default connect(null, mapDispatchToProps)(Login);

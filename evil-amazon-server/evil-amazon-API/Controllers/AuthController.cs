@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace evil_amazon_server.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class AuthController:ControllerBase
     {
         private readonly IRepositoryWrapper _repository;
@@ -18,7 +18,7 @@ namespace evil_amazon_server.Controllers
             _repository = repository;
         }
 
-        [HttpPost]
+        [HttpPost("Login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
             try
@@ -28,7 +28,7 @@ namespace evil_amazon_server.Controllers
                     return BadRequest("Wrong username or password");
                 }
 
-                var response = _repository.Users.Login(request.Username, request.Password);
+                var response = _repository.Users.Login(request.Email, request.Password);
 
                 if (response == null)
                 {
@@ -44,14 +44,14 @@ namespace evil_amazon_server.Controllers
          
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] UserUpsertDto request)
         {
             try
             {
                 if (request == null)
                 {
-                    return BadRequest("Wrong username or password");
+                    return BadRequest("Wrong email or password");
                 }
 
                 if (!ModelState.IsValid)
@@ -63,7 +63,7 @@ namespace evil_amazon_server.Controllers
 
                 if (user == null)
                 {
-                    return BadRequest("Wrong username or password");
+                    return BadRequest("Wrong email or password");
                 }
 
                 await _repository.Save();
