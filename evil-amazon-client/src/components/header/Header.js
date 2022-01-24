@@ -1,27 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Header.css";
 import amazonLogoWhite from "../../assets/amazonLogoWhite.png";
 import SearchIcon from "@mui/icons-material/Search";
 import HeaderOption from "./headerOption/HeaderOption";
 import HeaderBasket from "./headerBasket/HeaderBasket";
-import { Link, useNavigate } from "react-router-dom";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import { selectPath } from "../../redux/reducers/pathReducer";
 import { selectUser } from "../../redux/reducers/userReducer";
-import { logoutUser, userLogoutSucces } from "../../redux/actions/userActions";
+import { logoutUser } from "../../redux/actions/userActions";
 
-function Header({ logout }) {
-  const isLoginOrRegisterPage = useSelector(selectPath);
-  const user = useSelector(selectUser);
-  const navigate = useNavigate();
-
+function Header({ logout, isLoginOrRegisterPage, user }) {
   // Header will not show on login or register page
   if (isLoginOrRegisterPage) return null;
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/");
-  };
 
   return (
     <div className="header">
@@ -40,9 +31,9 @@ function Header({ logout }) {
             <HeaderOption top={"Hello Guest"} bottom={"Sign in"} />
           </Link>
         ) : (
-          <a onClick={handleLogout}>
+          <Link onClick={logout} to="/" className="header__login">
             <HeaderOption top={"Hello " + user.username} bottom={"Sign out"} />
-          </a>
+          </Link>
         )}
         <HeaderOption top={"Returns"} bottom={"& Orders"} />
         <HeaderOption top={"Your"} bottom={"Prime"} />
@@ -53,18 +44,18 @@ function Header({ logout }) {
   );
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     user: () => selectUser(state),
-//     isLoginOrRegisterPage: () => selectPath(state),
-//   };
-// };
+const mapStateToProps = (state) => {
+  return {
+    user: selectUser(state),
+    isLoginOrRegisterPage: selectPath(state),
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: async () => {
+    logout: () => {
       dispatch(logoutUser());
     },
   };
 };
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
