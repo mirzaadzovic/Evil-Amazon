@@ -21,6 +21,14 @@ namespace evil_amazon.repository
             _jwtService = new JwtService();
         }
 
+        public override UserDto GetById(int id)
+        {
+            var user = _context.Set<User>().Include("UserRoles.Role").FirstOrDefault(u=>u.UserId==id);
+            var userDto = _mapper.Map<UserDto>(user);
+            userDto.AddRoles(user);
+            return userDto;
+        }
+
         public override UserDto Insert(UserUpsertDto request)
         {
             var entity = _mapper.Map<User>(request);

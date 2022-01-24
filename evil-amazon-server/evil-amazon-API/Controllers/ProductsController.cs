@@ -64,6 +64,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="Seller, Customer")]
         public async Task<IActionResult> Insert([FromBody] ProductUpsertDto request)
         {
             try
@@ -90,6 +91,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Seller, Customer")]
         public async Task<IActionResult> Update(int id, [FromBody]ProductUpsertDto request)
         {
             try

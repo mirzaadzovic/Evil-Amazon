@@ -1,6 +1,8 @@
 ﻿using entities.Context;
 using evil_amazon.contracts;
 using evil_amazon.repository;
+using evil_amazon_server.Security;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,7 +47,8 @@ namespace API.Extensions
 
         public static void AddOAuthAuthentication(this IServiceCollection services)
         {
-                
+            services.AddAuthentication("BearerAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BearerAuthenticationHandler>("BearerAuthentication", null);
         }
     }
 }

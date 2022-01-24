@@ -23,7 +23,7 @@ namespace evil_amazon.repository.Helpers
             var header = new JwtHeader(credentials);
             var claims = CreateClaims(user);
 
-            var payload = new JwtPayload(user.UserId.ToString(), null, claims, DateTime.Now, DateTime.Now.AddHours(0));
+            var payload = new JwtPayload(user.UserId.ToString(), null, claims, DateTime.Now, DateTime.Now.AddHours(1));
             var token = new JwtSecurityToken(header, payload);
             
             return new JwtSecurityTokenHandler().WriteToken(token);

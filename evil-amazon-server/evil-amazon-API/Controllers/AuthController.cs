@@ -1,5 +1,6 @@
 ﻿using evil_amazon.contracts;
 using evil_amazon.dtos.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -83,7 +84,7 @@ namespace evil_amazon_server.Controllers
 
                 await _repository.Save();
 
-                return Created("User registered", user);
+                return RedirectToAction("Login", new LoginRequest() { Email=request.Email, Password=request.Password});
             }
             catch
             {
@@ -93,6 +94,7 @@ namespace evil_amazon_server.Controllers
         }
 
         [HttpGet("logout")]
+        [Authorize]
         public IActionResult Logout()
         {
             Response.Cookies.Delete("EvilCookie");
@@ -100,6 +102,7 @@ namespace evil_amazon_server.Controllers
         }
 
         [HttpGet("user")]
+        [Authorize]
         public IActionResult GetUser()
         {
             try
