@@ -29,6 +29,11 @@
 .login__container > form > h5 {
   margin-bottom: 5px;
 }
+.login__error {
+  color: red;
+  margin: 0 auto;
+  padding: 5px;
+}
 
 .login__container > form > input {
   height: 25px;

@@ -15,7 +15,6 @@ const reducers = combineReducers({
 });
 
 const store = createStore(reducers, applyMiddleware(thunk));
-// store.subscribe(() => console.log(store.getState()));
 
 store.dispatch(fetchLoggedInUser());
 store.dispatch(fetchProducts());

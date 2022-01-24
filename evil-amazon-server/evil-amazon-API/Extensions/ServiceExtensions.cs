@@ -36,7 +36,7 @@ namespace API.Extensions
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 builder
-                .WithOrigins(new[] { "http:/localhost:3000", "http:/localhost:8080", "http:/localhost:4200" })
+                .WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080", "http://localhost:4200" })
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()

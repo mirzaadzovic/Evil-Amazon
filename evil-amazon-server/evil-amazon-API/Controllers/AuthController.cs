@@ -48,7 +48,9 @@ namespace evil_amazon_server.Controllers
                 Response.Cookies.Append("EvilCookie", token, new CookieOptions()
                 {
                     HttpOnly = true,
-                    Expires = DateTimeOffset.Now.AddHours(1)
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    
                 });
 
                 return Ok(response);

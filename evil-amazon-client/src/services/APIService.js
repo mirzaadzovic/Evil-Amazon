@@ -2,7 +2,9 @@ import axios from "../axios/axios";
 
 export default class APIService {
   static async getAll(route) {
-    const response = await axios.get(route).catch((err) => err);
+    const response = await axios
+      .get(route, { withCredentials: true })
+      .catch((err) => err);
 
     if (response.status === 200) return response.data;
 
@@ -10,7 +12,9 @@ export default class APIService {
   }
 
   static async post(route, requestBody) {
-    const response = await axios.post(route, requestBody).catch((err) => err);
+    const response = await axios
+      .post(route, requestBody, { withCredentials: true })
+      .catch((err) => err);
 
     if (response.status === 201) return response.data;
 

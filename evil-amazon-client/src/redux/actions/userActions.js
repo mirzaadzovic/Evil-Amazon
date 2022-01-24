@@ -24,22 +24,20 @@ export const fetchLoggedInUser = () => {
       .then((data) => dispatch(userLoginSuccess(data)))
       .catch((err) => {
         dispatch(userLoginFaulire(err));
-        console.error(err);
       });
     console.clear();
   };
 };
 
 export const logInUser = (email, password) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(userLoginRequest);
-    AuthService.logIn(email, password)
+    const user = await AuthService.logIn(email, password)
       .then((data) => userLoginSuccess(data))
       .catch((err) => {
-        const mute = err;
         userLoginFaulire(err);
-        console.error(err);
       });
-    console.clear();
+
+    return user;
   };
 };

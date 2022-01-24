@@ -3,27 +3,45 @@ import "./Login.css";
 import amazonLogo from "../../assets/amazonLogo.png";
 import { connect, useDispatch } from "react-redux";
 import { setLoginFalse, setLoginTrue } from "../../redux/actions/pathActions";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logInUser } from "../../redux/actions/userActions";
+import { selectUser } from "../../redux/reducers/userReducer";
+import AuthService from "../../services/AuthService";
 
 const Login = ({ login }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
+    console.log("pozvana");
     dispatch(setLoginTrue());
-
+    redirectIfLoggedIn();
     return () => dispatch(setLoginFalse());
   }, []);
 
-  const signIn = (e) => {
+  const signIn = async (e) => {
     e.preventDefault();
-    login(email, password);
+    await login(email, password);
+    redirectIfLoggedIn();
+    setPassword("");
+    setShowError(true);
   };
 
   const register = (e) => {
     e.preventDefault();
+    navigate("/register");
+  };
+
+  const redirectIfLoggedIn = async () => {
+    const user = await AuthService.getLoggedInUser().catch((err) => err);
+
+    if (user?.userId) {
+      dispatch(setLoginFalse());
+      navigate("/");
+    }
   };
 
   const inputEmpty = !email || !password;
@@ -36,6 +54,9 @@ const Login = ({ login }) => {
 
       <div className="login__container">
         <h1>Sign-in</h1>
+        {showError && (
+          <p className="login__error">Wrong username or password</p>
+        )}
         <form>
           <h5>E-mail</h5>
           <input
@@ -74,10 +95,14 @@ const Login = ({ login }) => {
     </div>
   );
 };
-
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    login: (email, password) => dispatch(logInUser(email, password)),
+    loggedInUser: selectUser(state),
   };
 };
-export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: async (email, password) => dispatch(logInUser(email, password)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
