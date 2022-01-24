@@ -99,7 +99,7 @@ namespace evil_amazon_server.Controllers
         [Authorize]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("EvilCookie");
+            Response.Cookies.Delete("EvilCookie", new CookieOptions() { HttpOnly=true, SameSite= SameSiteMode.None,Secure=true});
             return Ok();
         }
 

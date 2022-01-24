@@ -8,7 +8,7 @@ import { logInUser } from "../../redux/actions/userActions";
 import { selectUser } from "../../redux/reducers/userReducer";
 import AuthService from "../../services/AuthService";
 
-const Login = ({ login }) => {
+const Login = ({ loggedInUser, login }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ const Login = ({ login }) => {
     dispatch(setLoginTrue());
     redirectIfLoggedIn();
     return () => dispatch(setLoginFalse());
-  }, []);
+  }, [loggedInUser]);
 
   const signIn = async (e) => {
     e.preventDefault();
@@ -36,12 +36,9 @@ const Login = ({ login }) => {
   };
 
   const redirectIfLoggedIn = async () => {
-    const user = await AuthService.getLoggedInUser().catch((err) => err);
+    // const user = await AuthService.getLoggedInUser().catch((err) => err);
 
-    if (user?.userId) {
-      dispatch(setLoginFalse());
-      navigate("/");
-    }
+    if (loggedInUser?.userId) navigate("/");
   };
 
   const inputEmpty = !email || !password;

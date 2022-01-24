@@ -18,4 +18,9 @@ export default class AuthService {
 
     throw Error("Unauthorized");
   }
+
+  static async logOut() {
+    console.log("LOGOUT");
+    await axios.get("/auth/logout").catch((err) => err);
+  }
 }

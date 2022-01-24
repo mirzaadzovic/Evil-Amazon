@@ -17,6 +17,11 @@ export const userLoginFaulire = (error) => ({
   payload: error,
 });
 
+export const USER_LOGOUT = "USER_LOGOUT_SUCCESS";
+export const userLogoutSucces = () => ({
+  type: USER_LOGOUT,
+});
+
 export const fetchLoggedInUser = () => {
   return (dispatch) => {
     dispatch(userLoginRequest);
@@ -32,12 +37,18 @@ export const fetchLoggedInUser = () => {
 export const logInUser = (email, password) => {
   return async (dispatch) => {
     dispatch(userLoginRequest);
-    const user = await AuthService.logIn(email, password)
-      .then((data) => userLoginSuccess(data))
+    await AuthService.logIn(email, password)
+      .then((data) => dispatch(userLoginSuccess(data)))
       .catch((err) => {
-        userLoginFaulire(err);
+        dispatch(userLoginFaulire(err));
       });
+  };
+};
 
-    return user;
+export const logoutUser = () => {
+  return async (dispatch) => {
+    dispatch(userLoginRequest());
+    await AuthService.logOut();
+    dispatch(userLogoutSucces());
   };
 };
