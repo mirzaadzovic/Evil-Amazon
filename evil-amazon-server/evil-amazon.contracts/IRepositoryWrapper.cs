@@ -10,6 +10,7 @@ namespace evil_amazon.contracts
     {
         IProductRepository Products { get; }
         IUserRepository Users { get; }
+        IJWTService JWTService { get; }
         Task Save();
     }
 }

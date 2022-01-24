@@ -1,5 +1,6 @@
 ﻿using evil_amazon.contracts;
 using evil_amazon.dtos.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,6 +12,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ProductsController:ControllerBase
     {
         private readonly IRepositoryWrapper _repository;
@@ -21,6 +23,7 @@ namespace API.Controllers
             _logger=loggerFactory.CreateLogger("products");
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll([FromQuery] string name=null)
         {
             try
@@ -41,6 +44,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public IActionResult GetById(int id)
         {
             try

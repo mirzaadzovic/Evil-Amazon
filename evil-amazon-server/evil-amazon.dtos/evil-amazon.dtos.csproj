@@ -5,4 +5,8 @@
     <RootNamespace>evil_amazon.dtos</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\entities\evil-amazon.entities.csproj" />
+  </ItemGroup>
+
 </Project>

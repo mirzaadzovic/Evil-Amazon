@@ -22,6 +22,9 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
+        "SecretKey": "_74r4d4n&m4ljug4n_",
+        "Issuer": "https://localhost:5001/",
+        "Audiance": "https://localhost:5001/",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": "true",

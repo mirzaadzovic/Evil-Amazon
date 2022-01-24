@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using evil_amazon.repository.Mapper;
+using evil_amazon.repository.Helpers;
 
 namespace evil_amazon.repository
 {
@@ -13,6 +14,7 @@ namespace evil_amazon.repository
     {
         private readonly IProductRepository _products;
         private readonly IUserRepository _users;
+        private readonly IJWTService _jwtService;
         private readonly EvilAmazonDbContext _context;
         public IProductRepository Products
         {
@@ -31,6 +33,16 @@ namespace evil_amazon.repository
                 if (_users == null)
                     return new UserRepository(_context);
                 return _users;
+            }
+        }
+
+        public IJWTService JWTService
+        {
+            get
+            {
+                if (_jwtService == null)
+                    return new JwtService();
+                return _jwtService;
             }
         }
 

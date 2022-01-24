@@ -3,6 +3,8 @@ using entities.Models;
 using evil_amazon.contracts;
 using evil_amazon.dtos;
 using evil_amazon.dtos.Requests;
+using evil_amazon.repository.Helpers;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +15,10 @@ namespace evil_amazon.repository
 {
     public class UserRepository : BaseCRUDRepository<UserDto, User, UserUpsertDto, UserUpsertDto>, IUserRepository
     {
+        private readonly JwtService _jwtService;
         public UserRepository(EvilAmazonDbContext context) : base(context)
         {
+            _jwtService = new JwtService();
         }
 
         public override UserDto Insert(UserUpsertDto request)
@@ -39,15 +43,24 @@ namespace evil_amazon.repository
 
         public UserDto Login(string email, string password)
         {
-            var user = _context.Set<User>().FirstOrDefault(u => u.Email == email);
+            var user = _context.Set<User>()
+                .Include(u=>u.UserRoles)
+                .ThenInclude(u=>u.Role)
+                .FirstOrDefault(u => u.Email == email);
 
             if (user == null)
                 return null;
 
             if (user.ValidateUser(password))
-                return _mapper.Map<UserDto>(user);
+            {
+                var userDto= _mapper.Map<UserDto>(user);
+                userDto.AddRoles(user);
+                return userDto;
+            }
 
             return null;
         }
+
+        
     }
 }

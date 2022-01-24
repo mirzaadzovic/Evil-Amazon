@@ -1,9 +1,15 @@
 ﻿using evil_amazon.contracts;
 using evil_amazon.dtos.Requests;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace evil_amazon_server.Controllers
@@ -13,11 +19,12 @@ namespace evil_amazon_server.Controllers
     public class AuthController:ControllerBase
     {
         private readonly IRepositoryWrapper _repository;
+
         public AuthController(IRepositoryWrapper repository)
         {
             _repository = repository;
         }
-
+       
         [HttpPost("Login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
@@ -29,6 +36,12 @@ namespace evil_amazon_server.Controllers
                 }
 
                 var response = _repository.Users.Login(request.Email, request.Password);
+                var token = _repository.JWTService.Sign(response);
+                Response.Cookies.Append("EvilCookie", token, new CookieOptions()
+                {
+                    HttpOnly = true,
+                    Expires = DateTimeOffset.Now.AddHours(1)
+                }); 
 
                 if (response == null)
                 {
@@ -70,7 +83,7 @@ namespace evil_amazon_server.Controllers
 
                 return Created("User registered", user);
             }
-            catch
+            catch(Exception ex)
             {
                 return StatusCode(500, "Internal server error");
             }

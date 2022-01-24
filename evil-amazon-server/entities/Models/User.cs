@@ -22,7 +22,7 @@ namespace entities.Models
         public DateTime DateRegistered { get; set; }
         public IEnumerable<UserRole> UserRoles { get; set; }
 
-        public string GenerateSalt()
+        public static string GenerateSalt()
         {
             var buf = new byte[16];
             (new RNGCryptoServiceProvider()).GetBytes(buf);

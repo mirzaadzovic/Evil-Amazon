@@ -16,6 +16,8 @@ namespace evil_amazon.repository.Mapper
         {
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<ProductUpsertDto, Product>();
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<UserUpsertDto, User>();
         }
     }
 }
