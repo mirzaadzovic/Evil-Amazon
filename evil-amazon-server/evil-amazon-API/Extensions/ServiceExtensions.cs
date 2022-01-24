@@ -33,9 +33,11 @@ namespace API.Extensions
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
-                builder.AllowAnyOrigin()
+                builder
+                .WithOrigins(new[] { "http:/localhost:3000", "http:/localhost:8080", "http:/localhost:4200" })
                 .AllowAnyMethod()
                 .AllowAnyHeader()
+                .AllowCredentials()
                 );
             });
             

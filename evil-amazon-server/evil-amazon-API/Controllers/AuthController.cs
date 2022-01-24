@@ -16,7 +16,7 @@ namespace evil_amazon_server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AuthController:ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IRepositoryWrapper _repository;
 
@@ -24,8 +24,8 @@ namespace evil_amazon_server.Controllers
         {
             _repository = repository;
         }
-       
-        [HttpPost("Login")]
+
+        [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
             try
@@ -36,17 +36,19 @@ namespace evil_amazon_server.Controllers
                 }
 
                 var response = _repository.Users.Login(request.Email, request.Password);
-                var token = _repository.JWTService.Sign(response);
-                Response.Cookies.Append("EvilCookie", token, new CookieOptions()
-                {
-                    HttpOnly = true,
-                    Expires = DateTimeOffset.Now.AddHours(1)
-                }); 
 
                 if (response == null)
                 {
                     return BadRequest("Wrong username or password");
                 }
+
+                // Generate JWT token
+                var token = _repository.JWTService.Sign(response);
+                Response.Cookies.Append("EvilCookie", token, new CookieOptions()
+                {
+                    HttpOnly = true,
+                    Expires = DateTimeOffset.Now.AddHours(1)
+                });
 
                 return Ok(response);
             }
@@ -54,10 +56,10 @@ namespace evil_amazon_server.Controllers
             {
                 return StatusCode(500, "Internal server error");
             }
-         
+
         }
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserUpsertDto request)
         {
             try
@@ -83,12 +85,38 @@ namespace evil_amazon_server.Controllers
 
                 return Created("User registered", user);
             }
-            catch(Exception ex)
+            catch
             {
                 return StatusCode(500, "Internal server error");
             }
 
         }
 
+        [HttpGet("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("EvilCookie");
+            return Ok();
+        }
+
+        [HttpGet("user")]
+        public IActionResult GetUser()
+        {
+            try
+            {
+                var jwt = Request.Cookies["EvilCookie"];
+                var token = _repository.JWTService.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                var user = _repository.Users.GetById(userId);
+
+                return Ok(user);
+            }
+            catch
+            {
+                return Unauthorized("You are not logged in");
+            }
+
+        }
     }
 }
