@@ -1,3 +1,4 @@
+import APIService from "../../services/APIService";
 import AuthService from "../../services/AuthService";
 
 export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
@@ -17,6 +18,11 @@ export const userLoginFaulire = (error) => ({
   payload: error,
 });
 
+export const USER_RESET = "USER_RESET";
+export const userReset = () => ({
+  type: USER_RESET,
+});
+
 export const USER_LOGOUT = "USER_LOGOUT_SUCCESS";
 export const userLogoutSucces = () => ({
   type: USER_LOGOUT,
@@ -28,7 +34,7 @@ export const fetchLoggedInUser = () => {
     AuthService.getLoggedInUser()
       .then((data) => dispatch(userLoginSuccess(data)))
       .catch((err) => {
-        dispatch(userLoginFaulire(err));
+        dispatch(userReset());
       });
     console.clear();
   };
@@ -40,7 +46,8 @@ export const logInUser = (email, password) => {
     await AuthService.logIn(email, password)
       .then((data) => dispatch(userLoginSuccess(data)))
       .catch((err) => {
-        dispatch(userLoginFaulire(err));
+        console.log(err.toString());
+        dispatch(userLoginFaulire(err.toString()));
       });
   };
 };
@@ -50,5 +57,14 @@ export const logoutUser = () => {
     dispatch(userLoginRequest());
     await AuthService.logOut();
     dispatch(userLogoutSucces());
+  };
+};
+
+export const registerUser = (user) => {
+  return async (dispatch) => {
+    dispatch(userLoginRequest());
+    await APIService.post("/auth/register", user)
+      .then((data) => dispatch(userLoginSuccess(data)))
+      .catch((err) => userLoginFaulire(err));
   };
 };

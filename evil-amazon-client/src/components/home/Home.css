@@ -26,3 +26,15 @@
   z-index: 1;
   margin: 0 5px;
 }
+
+@media (max-width: 475px) {
+  .home__row {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 285px) {
+  .home__image {
+    display: none;
+  }
+}

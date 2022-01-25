@@ -1,4 +1,5 @@
 ﻿using evil_amazon.contracts;
+using evil_amazon.dtos;
 using evil_amazon.dtos.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -36,24 +37,17 @@ namespace evil_amazon_server.Controllers
                     return BadRequest("Wrong username or password");
                 }
 
-                var response = _repository.Users.Login(request.Email, request.Password);
+                var user = _repository.Users.Login(request.Email, request.Password);
 
-                if (response == null)
+                if (user == null)
                 {
                     return BadRequest("Wrong username or password");
                 }
 
                 // Generate JWT token
-                var token = _repository.JWTService.Sign(response);
-                Response.Cookies.Append("EvilCookie", token, new CookieOptions()
-                {
-                    HttpOnly = true,
-                    Secure = true,
-                    SameSite = SameSiteMode.None,
-                    
-                });
+                AppendCookieJWT(user);
 
-                return Ok(response);
+                return Ok(user);
             }
             catch
             {
@@ -86,7 +80,9 @@ namespace evil_amazon_server.Controllers
 
                 await _repository.Save();
 
-                return RedirectToAction("Login", new LoginRequest() { Email=request.Email, Password=request.Password});
+                AppendCookieJWT(user);
+
+                return StatusCode(201, user);
             }
             catch
             {
@@ -122,6 +118,18 @@ namespace evil_amazon_server.Controllers
                 return Unauthorized("You are not logged in");
             }
 
+        }
+
+        private void AppendCookieJWT(UserDto user)
+        {
+            var token = _repository.JWTService.Sign(user);
+            Response.Cookies.Append("EvilCookie", token, new CookieOptions()
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTimeOffset.UtcNow.AddHours(1)
+            });
         }
     }
 }

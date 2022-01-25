@@ -31,6 +31,11 @@ namespace evil_amazon.repository
 
         public override UserDto Insert(UserUpsertDto request)
         {
+            var user = _context.Set<User>()
+                .FirstOrDefault(u => u.Email == request.Email || u.Username==request.Username);
+
+            if (user != null) return null;
+
             var entity = _mapper.Map<User>(request);
             entity.GeneratePassword(request.Password);
             entity.DateRegistered = DateTime.Now;

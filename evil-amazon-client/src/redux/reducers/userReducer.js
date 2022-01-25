@@ -3,6 +3,7 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
+  USER_RESET,
 } from "../actions/userActions";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
 };
 
 export const selectUser = (state) => state.user.loggedInUser;
+export const selectUserError = (state) => state.user.error;
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -27,6 +29,7 @@ const userReducer = (state = initialState, action) => {
         error: "",
       };
     case USER_LOGIN_FAILURE:
+      console.log(action.payload);
       return {
         loggedInUser: null,
         loading: false,
@@ -34,6 +37,9 @@ const userReducer = (state = initialState, action) => {
       };
     case USER_LOGOUT:
       return initialState;
+
+    case USER_RESET:
+      return { ...state, error: "" };
     default:
       return state;
   }

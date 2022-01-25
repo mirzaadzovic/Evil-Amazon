@@ -44,3 +44,52 @@
 .header__login {
   text-decoration: none;
 }
+
+.header__hamburger {
+  display: none !important;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 30px;
+}
+
+.header__hamburger > * {
+  color: white !important;
+}
+
+@media (max-width: 475px) {
+  .header__logo {
+    display: none;
+  }
+
+  .header__search {
+    max-width: 50%;
+  }
+  .header__searchInput {
+    width: 100%;
+  }
+
+  .header__hamburger {
+    display: flex !important;
+    margin-right: 20px !important;
+  }
+
+  .header__hamburger > * {
+    height: 2.5rem !important;
+    width: 2.5rem !important;
+  }
+
+  .header__hamburger > *:hover {
+    color: var(--amazon-yellow) !important;
+    transition: 0.2s;
+  }
+}
+
+@media (max-width: 270px) {
+  .header__search {
+    display: none;
+  }
+
+  .header__hamburger {
+    flex: 1;
+  }
+}

@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { selectPath } from "../../redux/reducers/pathReducer";
 import { selectUser } from "../../redux/reducers/userReducer";
 import { logoutUser } from "../../redux/actions/userActions";
+import MenuIcon from "@mui/icons-material/Menu";
 
 function Header({ logout, isLoginOrRegisterPage, user }) {
   // Header will not show on login or register page
@@ -19,6 +20,10 @@ function Header({ logout, isLoginOrRegisterPage, user }) {
       <Link to="/">
         <img className="header__logo" src={amazonLogoWhite} />
       </Link>
+
+      <div className="header__hamburger">
+        <MenuIcon />
+      </div>
 
       <div className="header__search">
         <input className="header__searchInput" type="text" />
@@ -35,8 +40,16 @@ function Header({ logout, isLoginOrRegisterPage, user }) {
             <HeaderOption top={"Hello " + user.username} bottom={"Sign out"} />
           </Link>
         )}
-        <HeaderOption top={"Returns"} bottom={"& Orders"} />
-        <HeaderOption top={"Your"} bottom={"Prime"} />
+        <HeaderOption
+          className="header__option"
+          top={"Returns"}
+          bottom={"& Orders"}
+        />
+        <HeaderOption
+          className="header__option"
+          top={"Your"}
+          bottom={"Prime"}
+        />
       </div>
 
       <HeaderBasket />

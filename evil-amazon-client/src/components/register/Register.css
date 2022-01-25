@@ -1,17 +1,17 @@
-.login {
+.register {
   height: 100vh;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.login__logo {
+.register__logo {
   height: 2.5rem;
   margin: 20px 0;
   object-fit: contain;
 }
 
-.login__container {
+.register__container {
   max-width: 300px;
   height: fit-content;
   display: flex;
@@ -21,21 +21,21 @@
   padding: 20px;
 }
 
-.login__container > h1 {
+.register__container > h1 {
   font-weight: 500;
   margin-bottom: 20px;
 }
 
-.login__container > form > h5 {
+.register__container > form > h5 {
   margin-bottom: 5px;
 }
-.login__error {
+.register__error {
   color: red;
   margin: 0 auto;
   padding: 5px;
 }
 
-.login__container > form > input {
+.register__container > form > input {
   height: 25px;
   margin-bottom: 10px;
   background-color: white;
@@ -43,22 +43,21 @@
   padding: 5px;
 }
 
-.login__signInButton {
+.register__signInButton {
   margin-top: 10px;
   width: 100%;
   height: 30px;
 }
 
-.login__container > p {
+.register__container > p {
   margin-top: 15px;
   font-size: 12px;
 }
 
-.login__createAccountButton {
+.register__createAccountButton {
   border-radius: 2px;
   width: 100%;
   height: 30px;
   border: 1px solid darkgray;
   margin-top: 10px;
-  cursor: pointer;
 }

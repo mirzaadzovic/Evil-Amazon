@@ -3,8 +3,8 @@ import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Checkout from "./components/checkout/Checkout";
-import store from "./redux/store";
 import Login from "./components/login/Login";
+import Register from "./components/register/Register";
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>

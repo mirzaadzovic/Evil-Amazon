@@ -1,44 +1,40 @@
 import React, { useEffect, useState } from "react";
-import "./Login.css";
+import "./Register.css";
 import amazonLogo from "../../assets/amazonLogo.png";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { setLoginFalse, setLoginTrue } from "../../redux/actions/pathActions";
 import { Link, useNavigate } from "react-router-dom";
-import { logInUser, userReset } from "../../redux/actions/userActions";
+import { logInUser, registerUser } from "../../redux/actions/userActions";
 import { selectUser, selectUserError } from "../../redux/reducers/userReducer";
+import UserDto from "../../models/UserDto";
 
-const Login = ({
-  loggedInUser,
-  login,
-  error,
-  resetUserError,
-  showHeader,
-  hideHeader,
-}) => {
+const Register = ({ loggedInUser, register, error }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [fName, setFName] = useState("");
+  const [lName, setLName] = useState("");
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
 
   useEffect(() => {
-    hideHeader();
+    dispatch(setLoginTrue());
     redirectIfLoggedIn();
-    return () => {
-      if (!loggedInUser?.userId) resetUserError();
-
-      showHeader();
-    };
+    return () => dispatch(setLoginFalse());
   }, [loggedInUser, error]);
 
-  const signIn = (e) => {
+  const handleRegistration = (e) => {
     e.preventDefault();
-    login(email, password);
+    const user = new UserDto({
+      email: email,
+      firstName: fName,
+      lastName: lName,
+      username: username,
+      password: password,
+    });
+    register(user);
     setPassword("");
-  };
-
-  const register = (e) => {
-    e.preventDefault();
-    navigate("/register");
   };
 
   const redirectIfLoggedIn = () => {
@@ -46,18 +42,18 @@ const Login = ({
     if (error) setShowError(true);
   };
 
-  const inputEmpty = !email || !password;
+  const inputEmpty = !email || !password || !fName || !lName || !username;
 
   return (
-    <div className="login">
+    <div className="register">
       <Link to="/">
-        <img className="login__logo" src={amazonLogo} />
+        <img className="register__logo" src={amazonLogo} />
       </Link>
 
-      <div className="login__container">
-        <h1>Sign-in</h1>
+      <div className="register__container">
+        <h1>Give your personal info to Evil Amazon</h1>
         {showError && (
-          <p className="login__error">Wrong username or password</p>
+          <p className="register__error">Wrong username or password</p>
         )}
         <form>
           <h5>E-mail</h5>
@@ -65,6 +61,25 @@ const Login = ({
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+          <h5>First name</h5>
+          <input
+            type="text"
+            value={fName}
+            onChange={(e) => setFName(e.target.value)}
+          />
+          <h5>Last name</h5>
+          <input
+            type="text"
+            value={lName}
+            onChange={(e) => setLName(e.target.value)}
+          />
+
+          <h5>Username</h5>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
 
           <h5>Password</h5>
@@ -75,11 +90,11 @@ const Login = ({
           />
 
           <button
-            className="login__signInButton amazon-btn"
-            onClick={signIn}
+            className="register__signInButton amazon-btn"
+            onClick={handleRegistration}
             disabled={inputEmpty}
           >
-            Sign In
+            Create Account
           </button>
         </form>
 
@@ -89,10 +104,6 @@ const Login = ({
           notice). Please see our Privacy Notice, our Cookie Not... I Know you
           won't read this anyway dumbass.
         </p>
-
-        <button className="login__createAccountButton" onClick={register}>
-          Create Evil Amazon Account
-        </button>
       </div>
     </div>
   );
@@ -105,10 +116,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (email, password) => dispatch(logInUser(email, password)),
-    resetUserError: () => dispatch(userReset()),
-    showHeader: () => dispatch(setLoginFalse()),
-    hideHeader: () => dispatch(setLoginTrue()),
+    register: (user) => dispatch(registerUser(user)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

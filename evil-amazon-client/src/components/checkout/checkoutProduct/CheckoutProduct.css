@@ -31,3 +31,10 @@
 .checkoutProduct__title {
   font-size: 17px;
 }
+
+@media (max-width: 475px) {
+  .checkoutProduct {
+    flex-direction: column-reverse;
+    border-bottom: 1px solid lightgray;
+  }
+}
