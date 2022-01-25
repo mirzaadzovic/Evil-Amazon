@@ -4,11 +4,22 @@ import amazonLogo from "../../assets/amazonLogo.png";
 import { connect, useDispatch } from "react-redux";
 import { setLoginFalse, setLoginTrue } from "../../redux/actions/pathActions";
 import { Link, useNavigate } from "react-router-dom";
-import { logInUser, registerUser } from "../../redux/actions/userActions";
+import {
+  logInUser,
+  registerUser,
+  userReset,
+} from "../../redux/actions/userActions";
 import { selectUser, selectUserError } from "../../redux/reducers/userReducer";
 import UserDto from "../../models/UserDto";
 
-const Register = ({ loggedInUser, register, error }) => {
+const Register = ({
+  loggedInUser,
+  register,
+  error,
+  showHeader,
+  hideHeader,
+  resetUserError,
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -19,9 +30,12 @@ const Register = ({ loggedInUser, register, error }) => {
   const [showError, setShowError] = useState(false);
 
   useEffect(() => {
-    dispatch(setLoginTrue());
+    hideHeader();
     redirectIfLoggedIn();
-    return () => dispatch(setLoginFalse());
+    return () => {
+      if (!loggedInUser) resetUserError();
+      showHeader();
+    };
   }, [loggedInUser, error]);
 
   const handleRegistration = (e) => {
@@ -117,6 +131,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     register: (user) => dispatch(registerUser(user)),
+    showHeader: () => dispatch(setLoginFalse()),
+    hideHeader: () => dispatch(setLoginTrue()),
+    resetUserError: () => dispatch(userReset()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
