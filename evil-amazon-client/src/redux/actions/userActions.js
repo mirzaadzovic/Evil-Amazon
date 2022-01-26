@@ -65,6 +65,9 @@ export const registerUser = (user) => {
     dispatch(userLoginRequest());
     await APIService.post("/auth/register", user)
       .then((data) => dispatch(userLoginSuccess(data)))
-      .catch((err) => userLoginFaulire(err));
+      .catch((err) => {
+        console.log(err);
+        userLoginFaulire(err.toString());
+      });
   };
 };

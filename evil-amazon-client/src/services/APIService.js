@@ -11,6 +11,7 @@ export default class APIService {
 
   static async post(route, requestBody) {
     const response = await axios.post(route, requestBody).catch((err) => err);
+    console.log(response);
     if (response?.status === 201) return response.data;
 
     throw Error(response);

@@ -80,6 +80,7 @@ namespace evil_amazon_server.Controllers
 
                 await _repository.Save();
 
+                // Generate JWT token
                 AppendCookieJWT(user);
 
                 return StatusCode(201, user);

@@ -52,6 +52,7 @@ const Register = ({
   };
 
   const redirectIfLoggedIn = () => {
+    console.log(error);
     if (loggedInUser?.userId) navigate("/");
     if (error) setShowError(true);
   };
