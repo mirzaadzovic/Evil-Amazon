@@ -1,4 +1,5 @@
 using API.Extensions;
+using evil_amazon_server.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,7 +29,11 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOAuthAuthentication();
-            services.AddControllers();
+            services.AddControllers(
+                configure=>
+                    configure.Filters.Add<ErrorFilter>()
+            );
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "evil_amazon_server", Version = "v1" });
